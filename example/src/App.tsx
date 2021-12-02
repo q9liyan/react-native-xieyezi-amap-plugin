@@ -6,8 +6,13 @@ import { multiply } from 'react-native-xieyezi-amap-plugin';
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
 
+  const getResult = async () => {
+    const returnResult = await multiply(3, 8);
+    setResult(returnResult);
+  };
+
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    getResult();
   }, []);
 
   return (
