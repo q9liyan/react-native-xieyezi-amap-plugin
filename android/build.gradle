@@ -56,4 +56,6 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.amap.api:location:5.6.1' // 定位sdk
+    implementation 'com.amap.api:navi-3dmap:8.1.0_3dmap8.1.0' // 导航sdk
 }
