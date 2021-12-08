@@ -1,14 +1,49 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
+import type { AppKey } from './type';
 
-export interface XiyeziAmapPluginType {
-  init: (key: string) => Promise<null>;
-  start: () => Promise<any>;
-  stop: () => void;
-  isStarted: () => Promise<boolean>;
-  getCurrentLocation: () => Promise<any>;
+const XiyeziAmapPlugin = NativeModules.XieyeziAmapPlugin;
+const eventEmitter = new NativeEventEmitter(XiyeziAmapPlugin);
+
+export function init(key: AppKey) {
+  console.log(Platform.select(key));
+  XiyeziAmapPlugin.init(Platform.select(key));
 }
 
-const XiyeziAmapPlugin =
-  NativeModules.XieyeziAmapPlugin as XiyeziAmapPluginType;
+export function start() {
+  XiyeziAmapPlugin.start();
+}
 
-export default XiyeziAmapPlugin;
+export function stop() {
+  XiyeziAmapPlugin.stop();
+}
+
+export function isStarted() {
+  return XiyeziAmapPlugin.isStarted();
+}
+
+/**
+ * 添加定位监听函数
+ *
+ * @param listener
+ */
+export function addLocationListener(listener: (location: any) => void) {
+  return eventEmitter.addListener('onLocationChanged', listener);
+}
+
+export function getCurrentPosition(
+  successCallback: (position: any) => void,
+  errorCallBack?: (err: string) => void
+) {
+  const listener = addLocationListener((location) => {
+    console.log(location);
+    if (location.errorCode !== 0) {
+      errorCallBack && errorCallBack(location.errorCode + location.errorInfo);
+      stop();
+      return listener.remove();
+    }
+    successCallback(location);
+    stop();
+    return listener.remove();
+  });
+  start();
+}

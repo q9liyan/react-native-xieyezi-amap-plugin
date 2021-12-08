@@ -6,25 +6,37 @@ import {
   Button,
   PermissionsAndroid,
 } from 'react-native';
-import XiyeziAmapPlugin from 'react-native-xieyezi-amap-plugin';
+import {
+  init,
+  start,
+  getCurrentPosition,
+} from 'react-native-xieyezi-amap-plugin';
 
 export default function App() {
   const [location, setLocation] = React.useState(null);
-  const { init, start, getCurrentLocation } = XiyeziAmapPlugin;
 
   const amapInit = async () => {
     await PermissionsAndroid.requestMultiple([
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
     ]);
-    await init('67fa3daaa4d6ad8f88d4d8713b362d30');
+    await init({
+      android: '62a44638f3afd901eb1b2109e811f74b',
+      ios: '',
+    });
     console.log('已经初始化...');
   };
 
-  const getLocation = async () => {
-    const target = await getCurrentLocation();
-    console.log(target);
-    setLocation(target);
+  const getLocation = () => {
+    getCurrentPosition(
+      (position) => {
+        console.log(position);
+        setLocation(position);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   const startPostion = async () => {
