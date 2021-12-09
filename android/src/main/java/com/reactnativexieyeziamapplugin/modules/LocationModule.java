@@ -1,4 +1,4 @@
-package com.reactnativexieyeziamapplugin;
+package com.reactnativexieyeziamapplugin.modules;
 
 
 import androidx.annotation.NonNull;
@@ -18,16 +18,16 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
-@ReactModule(name = XieyeziAmapPluginModule.NAME)
-public class XieyeziAmapPluginModule extends ReactContextBaseJavaModule implements AMapLocationListener{
-    public static final String NAME = "XieyeziAmapPlugin";
+@ReactModule(name = LocationModule.NAME)
+public class LocationModule extends ReactContextBaseJavaModule implements AMapLocationListener{
+    public static final String NAME = "XieyeziAmapLocationModule";
     private ReactApplicationContext reactContext;
     private DeviceEventManagerModule.RCTDeviceEventEmitter eventEmitter;
     private AMapLocationClient client;
     private AMapLocationClientOption option = new AMapLocationClientOption();
 
 
-    public XieyeziAmapPluginModule(ReactApplicationContext reactContext) {
+    public LocationModule(ReactApplicationContext reactContext) {
 
       super(reactContext);
       this.reactContext = reactContext;

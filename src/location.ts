@@ -1,7 +1,7 @@
 import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
-import type { AppKey } from './type';
+import type { AppKey } from './types';
 
-const XiyeziAmapPlugin = NativeModules.XieyeziAmapPlugin;
+const XiyeziAmapPlugin = NativeModules.XieyeziAmapLocationModule;
 const eventEmitter = new NativeEventEmitter(XiyeziAmapPlugin);
 
 export function init(key: AppKey) {
