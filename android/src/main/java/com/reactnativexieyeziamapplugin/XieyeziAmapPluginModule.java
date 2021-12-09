@@ -67,13 +67,8 @@ public class XieyeziAmapPluginModule extends ReactContextBaseJavaModule implemen
 
 
     @ReactMethod
-    public  void start(Promise promise) {
-      try {
-        client.startLocation();
-        promise.resolve(null);
-      }catch (Exception e) {
-        promise.reject(e);
-      }
+    public  void start() {
+      client.startLocation();
     }
 
     @ReactMethod

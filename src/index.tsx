@@ -5,7 +5,6 @@ const XiyeziAmapPlugin = NativeModules.XieyeziAmapPlugin;
 const eventEmitter = new NativeEventEmitter(XiyeziAmapPlugin);
 
 export function init(key: AppKey) {
-  console.log(Platform.select(key));
   XiyeziAmapPlugin.init(Platform.select(key));
 }
 

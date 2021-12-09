@@ -13,7 +13,7 @@ import {
 } from 'react-native-xieyezi-amap-plugin';
 
 export default function App() {
-  const [location, setLocation] = React.useState(null);
+  const [location, setLocation] = React.useState('');
 
   const amapInit = async () => {
     await PermissionsAndroid.requestMultiple([
@@ -24,28 +24,18 @@ export default function App() {
       android: '62a44638f3afd901eb1b2109e811f74b',
       ios: '',
     });
-    console.log('已经初始化...');
   };
 
   const getLocation = () => {
     getCurrentPosition(
       (position) => {
         console.log(position);
-        setLocation(position);
+        setLocation(JSON.stringify(position));
       },
       (error) => {
         console.log(error);
       }
     );
-  };
-
-  const startPostion = async () => {
-    try {
-      await start();
-      // console.log('开始定位...');
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   React.useEffect(() => {
@@ -55,7 +45,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Button title="开始定位" onPress={startPostion} />
+      <Button title="开始定位" onPress={start} />
       <Button title="获取location" onPress={getLocation} />
       <Text>{location}</Text>
     </View>
